@@ -7,9 +7,10 @@ Stuvat is an application that allows for sending bounding box information on a s
 ## Quick (local) start
 
 ```
-git clone *link*
-npm i
-npm run dev
+git clone git@github.com:stuartallen/Stuvat.git
+cd website
+pnpm i
+pnpm start
 ```
 
 ## Tech stack
