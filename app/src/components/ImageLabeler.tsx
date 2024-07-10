@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { LabelPoint } from '../App'
 
 type ImageLabelerProps = {
@@ -15,8 +15,14 @@ const getWrapperHeight = (windowWidth: number, windowHeight: number) => {
     return windowWidth < 1280 ? windowHeight * (5 / 6) : windowHeight
 }
 
-const handleDraw = (ctx: CanvasRenderingContext2D, image: HTMLImageElement, panOffset: { x: number, y: number }, wrapperWidth: number, wrapperHeight: number) => {
-    ctx.drawImage(image, panOffset.x + wrapperWidth / 2 - image.width / 2, panOffset.y + wrapperHeight / 2 - image.height / 2)
+const handleDraw = (ctx: CanvasRenderingContext2D, image: HTMLImageElement, panOffset: { x: number, y: number }, wrapperWidth: number, wrapperHeight: number, scale: number) => {
+    const scaledWidth = image.width * scale;
+    const scaledHeight = image.height * scale;
+
+    const dx = panOffset.x + wrapperWidth / 2 - scaledWidth / 2;
+    const dy = panOffset.y + wrapperHeight / 2 - scaledHeight / 2;
+
+    ctx.drawImage(image, dx, dy, scaledWidth, scaledHeight);
 }
 
 function ImageLabeler ({ imageUrl, labelPoints, onLabelPointClick }: ImageLabelerProps): JSX.Element {
@@ -29,18 +35,27 @@ function ImageLabeler ({ imageUrl, labelPoints, onLabelPointClick }: ImageLabele
 
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+    const [scale, setScale] = useState(1)
 
     useEffect(() => {
         const handleMouseDown = () => setIsMouseDown(true);
         const handleMouseUp = () => setIsMouseDown(false);
+        const handleWheel = (event: WheelEvent) => {
+            const direction = event.deltaY < 0 ? 1 : -1;
+            setScale(prevScale => {
+                const newScale = prevScale + direction * 0.1;
+                return Math.min(Math.max(newScale, 0.5), 3);
+            });
+        };
         
-
         window.addEventListener('mousedown', handleMouseDown);
         window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('wheel', handleWheel);
 
         return () => {
             window.removeEventListener('mousedown', handleMouseDown);
             window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('wheel', handleWheel);
         };
     });
 
@@ -78,13 +93,13 @@ function ImageLabeler ({ imageUrl, labelPoints, onLabelPointClick }: ImageLabele
         image.src = imageUrl
         if(!isImageLoaded) {
             image.onload = () => {
-                handleDraw(ctx, image, panOffset, wrapperWidth, wrapperHeight)
+                handleDraw(ctx, image, panOffset, wrapperWidth, wrapperHeight, scale)
             }
             setIsImageLoaded(true)
             return
         }
-        handleDraw(ctx, image, panOffset, wrapperWidth, wrapperHeight)
-    }, [imageUrl, wrapperWidth, wrapperHeight, panOffset])
+        handleDraw(ctx, image, panOffset, wrapperWidth, wrapperHeight, scale)
+    }, [imageUrl, wrapperWidth, wrapperHeight, panOffset, scale])
 
     return <div  className='w-full h-full bg-slate-600' style={{width: '100%', height: '100%'}}>
         <canvas ref={canvasRef} width={wrapperWidth} height={wrapperHeight} />
