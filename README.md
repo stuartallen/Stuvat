@@ -18,3 +18,7 @@ pnpm start
 React - Frontend/SPA framework
 Tailwind - Easy style framework, no confusing classnames
 Axios - Making requests easy to send
+
+## Apple Demo Picture Courtesy of Pexels
+
+link: https://www.pexels.com/search/apples/
