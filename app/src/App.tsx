@@ -81,14 +81,16 @@ function App() {
         <div className="w-full h-1/6 xl:w-1/6 xl:h-full border-2 border-white bg-black">
           <div className="h-full flex flex-col justify-between">
             <div className="w-full">
-              {orderedLabeledPoints.map((point, index) => (
-                <div key={index} className="flex flex-row xl:flex-col p-2">
-                  <span>Point {index + 1}:</span>
-                  <span>
-                    ({point.x.toFixed(3)}, {point.y.toFixed(3)})
-                  </span>
-                </div>
-              ))}
+              <div className="flex flex-row xl:flex-col">
+                {orderedLabeledPoints.map((point, index) => (
+                  <div key={index} className="flex flex-row xl:flex-col p-2">
+                    <span>Point {index + 1}:</span>
+                    <span>
+                      ({point.x.toFixed(3)}, {point.y.toFixed(3)})
+                    </span>
+                  </div>
+                ))}
+              </div>
               {/** Checking existence verifies divide by 0 errors */}
               {yoloFormat.xMid &&
               yoloFormat.yMid &&
