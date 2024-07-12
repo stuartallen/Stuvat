@@ -17,9 +17,6 @@ importers:
       '@testing-library/user-event':
         specifier: ^13.5.0
         version: 13.5.0(@testing-library/dom@8.20.1)
-      '@types/jest':
-        specifier: ^27.5.2
-        version: 27.5.2
       '@types/node':
         specifier: ^16.18.101
         version: 16.18.101
@@ -54,6 +51,9 @@ importers:
       '@eslint/js':
         specifier: ^9.6.0
         version: 9.6.0
+      '@types/jest':
+        specifier: ^27.5.2
+        version: 27.5.2
       eslint:
         specifier: ^8.57.0
         version: 8.57.0

@@ -28,7 +28,8 @@ function App() {
     const img = new Image();
     img.src = STATIC_IMG_PATH;
     img.onload = () => {
-      setImageSize({ width: img.width, height: img.height });
+      //  Avoids off by 1 error at 100% for yolo percentages
+      setImageSize({ width: img.width - 1, height: img.height - 1 });
     };
   }, []);
 

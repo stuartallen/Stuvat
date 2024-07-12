@@ -57,8 +57,14 @@ function SendButton({
       ) : null}
       <button
         className="w-full max-w-32 xl:max-w-none text-center bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 my-2 ml-2 xl:ml-0 rounded"
-        // Send exclusively valid bounding boxes
-        disabled={labelPoints.length !== 2 || !yoloFormatExists || isLoading}
+        disabled={
+          // Force user to make new bounding box if last was successfully submitted
+          isConfirmed ||
+          // Send exclusively valid bounding boxes
+          labelPoints.length !== 2 ||
+          !yoloFormatExists ||
+          isLoading
+        }
         onClick={handleClick}
       >
         Send
