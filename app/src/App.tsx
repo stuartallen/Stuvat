@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ImageLabeler from "./components/ImageLabeler";
 import SendButton from "./components/SendButton";
+import LoginPage from "./components/LoginPage";
 
 export type LabelPoint = {
   x: number;
@@ -21,6 +22,7 @@ export const STATIC_IMG_PATH = "./apples.jpg";
 function App() {
   const [labelPointsQueue, setLabelPointsQueue] = useState<LabelPoint[]>([]);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const img = new Image();
@@ -62,7 +64,7 @@ function App() {
         }
       : {};
 
-  return (
+  return isLoggedIn ? (
     <div className="absolute w-screen h-screen flex flex-col bg-black overflow-hidden">
       <h1 className="w-full h-16 text-3xl flex items-center pl-4 border-2 border-white">
         Stuvat
@@ -111,6 +113,8 @@ function App() {
         </div>
       </div>
     </div>
+  ) : (
+    <LoginPage setIsLoggedIn={setIsLoggedIn} />
   );
 }
 
