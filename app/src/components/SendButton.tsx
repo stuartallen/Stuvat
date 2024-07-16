@@ -47,7 +47,7 @@ function SendButton({
   });
 
   return (
-    <div className="w-full flex flex-row xl:flex-col justify-end items-center xl:justify-center px-2">
+    <div className="absolute flex bottom-0 right-4 xl:right-2 w-fit items-center">
       {isConfirmed ? <span className="text-green-500">Confirmed!</span> : null}
       {isErrored ? <span className="text-red-500">Error!</span> : null}
       {isLoading ? <span className="text-yellow-500">Loading...</span> : null}
@@ -56,7 +56,7 @@ function SendButton({
         <span className="text-red-500">Bounding box not valid!</span>
       ) : null}
       <button
-        className="w-full max-w-32 xl:max-w-none text-center bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 my-2 ml-2 xl:ml-0 rounded"
+        className="w-full max-w-32 xl:max-w-none text-center bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 my-2 ml-2 rounded"
         disabled={
           // Force user to make new bounding box if last was successfully submitted
           isConfirmed ||

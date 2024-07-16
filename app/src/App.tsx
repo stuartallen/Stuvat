@@ -80,7 +80,7 @@ function App() {
         </div>
         <div className="w-full h-1/6 xl:w-1/6 xl:h-full border-2 border-white bg-black">
           <div className="h-full flex flex-col justify-between">
-            <div className="w-full">
+            <div className="relative flex flex-col">
               <div className="flex flex-row xl:flex-col">
                 {orderedLabeledPoints.map((point, index) => (
                   <div key={index} className="flex flex-row xl:flex-col p-2">
